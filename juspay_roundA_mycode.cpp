@@ -102,6 +102,16 @@ class N_ary_Tree{
         }
         return isSatified;
     }
+
+    void unlock_all_descends(Node *root,int id){
+      for(auto child: root->children)
+      {
+        if(child->is_lock)
+        unlock_operation(child->val,id);
+        
+        unlock_all_descends(child,id);
+      }
+    }
   //------------------------------------
     
 
@@ -167,10 +177,8 @@ class N_ary_Tree{
 
 
        // since we are now going to upgrade this node so unlock the descendents
-        for(auto child: cur_node->children){
-           if(child->is_lock)
-           unlock_operation(child->val,upgrade_id);
-        }
+        unlock_all_descends(cur_node,upgrade_id);
+        
         // lock this node
         lock_operation(cur_node->val,upgrade_id);
 
@@ -192,7 +200,7 @@ int main(){
 
    buildTree(root,NULL,m,n,1,nodes);
 
-//    printTree(root);
+  //  printTree(root);
 
    N_ary_Tree *tree=new N_ary_Tree(root);
 
@@ -228,7 +236,6 @@ int main(){
 
    }
   
-
 
 
 }

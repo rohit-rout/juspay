@@ -136,8 +136,6 @@ class N_ary_Tree{
        inform_ancestors(cur_node->parent,cur_node,0);
 
        return true;
-
-
     }
 
     bool upgrade_operation(string cur_val, int upgrade_id){
